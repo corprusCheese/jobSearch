@@ -4,7 +4,8 @@
       <b-icon-search></b-icon-search>
       <input id ="searchInput" class="form-control form-control-sm m-3 w-50 h-35" style="height: 35px" type="text" placeholder="Нажми"
              aria-label="Search" v-on:click="showSearchPreset">
-      <button id="searchButton" type="button" class="btn btn-dark d-none" style="height: 35px">Найти</button>
+      <button id="searchButton" type="button" class="btn btn-dark d-none" style="height: 35px"
+      v-on:click="sendQueryToSite">Найти</button>
     </form>
     <div class="search-preset" id="preset">
       <p style="text-align: center; margin: 20px; color: gray; font-size: 20px">Опиши себя по масти</p>
@@ -47,6 +48,8 @@
 </template>
 
 <script>
+import {HandlerFactory} from "@/classes/Handlers/factory/HandlerFactory";
+
 export default {
   name: 'JobSearch',
   data: () => {
@@ -86,6 +89,12 @@ export default {
       block.classList.add('search-preset-show');
       input.placeholder = "Ответь на вопросы ниже или напиши поисковую строку сам";
       searchButton.classList.remove('d-none');
+    },
+    sendQueryToSite: () => {
+      let text = document.getElementById("searchInput").value.trim()
+      let handlerFactory = new HandlerFactory();
+      let handler = handlerFactory.make("hh");
+      handler.sendSearchRequest("/vacancies",text);
     }
   },
   updated: function() {

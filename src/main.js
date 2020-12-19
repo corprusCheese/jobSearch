@@ -11,9 +11,10 @@ Vue.use(IconsPlugin)
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
+const axios = require('axios').default;
 const router = new VueRouter({routes});
 
 new Vue({
   render: h => h(App),
-  router
+  router, axios
 }).$mount('#app')
