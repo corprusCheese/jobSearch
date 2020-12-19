@@ -58,6 +58,8 @@ export default {
       selectedLanguages: [],
       selectedSpec: [],
       searchInput: "",
+      searchData: null,
+      handlerFactory: HandlerFactory,
       grades: [
         {id: 0, name: "junior"},
         {id: 1, name: "middle"},
@@ -90,11 +92,14 @@ export default {
       input.placeholder = "Ответь на вопросы ниже или напиши поисковую строку сам";
       searchButton.classList.remove('d-none');
     },
-    sendQueryToSite: () => {
-      let text = document.getElementById("searchInput").value.trim()
-      let handlerFactory = new HandlerFactory();
-      let handler = handlerFactory.make("hh");
-      handler.sendSearchRequest("/vacancies",text);
+    sendQueryToSite: function() {
+      let text = document.getElementById("searchInput").value.trim();
+      this.handlerFactory.prototype.make("hh").sendSearchRequest("/vacancies", text)
+          .then((result) => {
+            if (result.status === 200) {
+              this.searchData = result.data;
+            }
+          })
     }
   },
   updated: function() {
