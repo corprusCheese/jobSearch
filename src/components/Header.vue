@@ -18,20 +18,4 @@ export default {
 </script>
 
 <style>
-.custom-nav {
-  margin-bottom: 50px;
-  padding: 20px;
-  border-bottom: 1.5px solid black;
-  text-align: center;
-  background-image: url("/../images/stars.jpg");
-}
-
-.custom-nav a{
-  color: whitesmoke;
-}
-.custom-nav a:hover{
-  color: orange;
-  text-decoration: none;
-}
-
 </style>

@@ -8,7 +8,7 @@
       v-on:click="sendQueryToSite">Найти</button>
     </form>
     <div class="search-preset" id="preset">
-      <p style="text-align: center; margin: 20px; color: gray; font-size: 20px">Опиши себя по масти</p>
+      <p style="text-align: center; margin: 20px; color: gray; font-size: 18px">Опиши себя по лычкам и я дам тебе новую..</p>
       <div class="row">
         <div class="search-option col-4">
           <label for="grade">Грейд</label>
@@ -41,7 +41,7 @@
                 d="m 24.415077,45.934734 c 10.069026,20.389914 10.069026,17.389914 14.069026,16.389914 6.037651,-38.63337 11.037651,-38.63337 11.037651,-40.63337"/>
         </g>
         </svg>
-        <p>Поздравляем, ваша масть: <b>петух</b></p>
+        <p>Поздравляю, ты <b>петух</b>.</p>
       </div>
     </div>
   </div>
@@ -128,55 +128,5 @@ export default {
 </script>
 
 <style>
-.search-preset {
-  width: 100%;
-  height: 50px;
-  /*border-top: darkred 1px solid;*/
-  margin: 20px auto;
-  display: none;
-}
 
-.search-preset-show {
-  display: block;
-  animation: showBlock 0.5s linear forwards;
-}
-
-.search-option {
- /* display: inline;
-  margin-left: 5px;
-  margin-right: 5px;*/
-  text-align: center;
-}
-
-@keyframes showBlock {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 2;
-  }
-}
-/*Галка*/
-.st0{ fill: none; stroke: green; stroke-width: 5; stroke-miterlimit: 5; }
-.st0 {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 7s linear forwards;
-}
-@keyframes dash {
-  from{
-    stroke-dashoffset: 1000;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-.ok-rank {
-  text-align: center;
-  vertical-align: bottom;
-  border-radius: 10px;
-  width: fit-content;
-  padding: 10px;
-  margin: 60px auto auto;
-}
 </style>
