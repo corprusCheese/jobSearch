@@ -5,7 +5,7 @@
       <input id ="searchInput" class="form-control form-control-sm m-3 w-50 h-35" style="height: 35px" type="text" placeholder="Нажми"
              aria-label="Search" v-on:click="showSearchPreset">
       <button id="searchButton" type="button" class="btn btn-dark d-none" style="height: 35px"
-      v-on:click="sendQueryToSite">Найти</button>
+      v-on:click="sendQueryToHhSite">Найти</button>
     </form>
     <div class="search-preset" id="preset">
       <p style="text-align: center; margin: 20px; color: gray; font-size: 18px">Опиши себя по лычкам и я дам тебе новую..</p>
@@ -92,7 +92,7 @@ export default {
       input.placeholder = "Ответь на вопросы ниже или напиши поисковую строку сам";
       searchButton.classList.remove('d-none');
     },
-    sendQueryToSite: function() {
+    sendQueryToHhSite: function() {
       let text = document.getElementById("searchInput").value.trim();
       this.handlerFactory.prototype.make("hh").sendSearchRequest("/vacancies", text)
           .then((result) => {
@@ -100,6 +100,13 @@ export default {
               this.searchData = result.data;
             }
           })
+    },
+    sendQueryToGenmatSite: function () {
+      let text = "[S:2:M:I]";
+      this.handlerFactory.prototype.make("genmat").sendSearchRequest("/generator", text)
+        .then((result) => {
+          console.log(result);
+        })
     }
   },
   updated: function() {
@@ -122,6 +129,7 @@ export default {
     if (this.selectedGrades.length && this.selectedLanguages.length && this.selectedSpec.length) {
       let ok = document.getElementsByClassName("ok-rank")[0];
       ok.classList.remove('d-none');
+      this.sendQueryToGenmatSite()
     }
   }
 }
