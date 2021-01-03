@@ -6,7 +6,7 @@ export class HhHandler extends Handler {
         this.url = "https://api.hh.ru"
     }
 
-    sendSearchRequest(url, text) {
+    sendSearchRequest({url, text}) {
         super.sendSearchRequest();
         return this.axios.get(this.url + url + "?text=" + text)
     }

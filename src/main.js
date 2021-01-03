@@ -2,6 +2,7 @@ import App from './App.vue'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes';
+import store from './store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 Vue.use(VueRouter)
@@ -18,5 +19,5 @@ const router = new VueRouter({routes});
 
 new Vue({
   render: h => h(App),
-  router, axios
+  router, axios, store
 }).$mount('#app')

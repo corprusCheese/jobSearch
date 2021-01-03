@@ -49,6 +49,7 @@
 
 <script>
 import {HandlerFactory} from "@/classes/Handlers/factory/HandlerFactory";
+import {mapGetters, mapActions} from "vuex"
 
 export default {
   name: 'JobSearch',
@@ -58,7 +59,6 @@ export default {
       selectedLanguages: [],
       selectedSpec: [],
       searchInput: "",
-      searchData: null,
       handlerFactory: HandlerFactory,
       grades: [
         {id: 0, name: "junior"},
@@ -82,6 +82,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchVacancies']),
+    ...mapGetters(['allVacancies']),
+    isAllSet: function() {
+      return this.selectedGrades.length
+          && this.selectedLanguages.length
+          && this.selectedSpec.length
+    },
     showSearchPreset: () => {
       //elements
       let block = document.getElementById("preset");
@@ -92,49 +99,29 @@ export default {
       input.placeholder = "Ответь на вопросы ниже или напиши поисковую строку сам";
       searchButton.classList.remove('d-none');
     },
-    sendQueryToHhSite: function() {
-      let text = document.getElementById("searchInput").value.trim();
-      this.handlerFactory.prototype.make("hh").sendSearchRequest("/vacancies", text)
-          .then((result) => {
-            if (result.status === 200) {
-              this.searchData = result.data;
-            }
-          })
-    },
-    sendQueryToGenmatSite: function () {
-      let text = "[S:2:M:I]";
-      this.handlerFactory.prototype.make("genmat").sendSearchRequest("/generator", text)
-        .then((result) => {
-          console.log(result);
-        })
-    }
-  },
-  updated: function() {
-    let array = [];
-    this.searchInput = "";
-    array.push(this.selectedGrades.length?this.selectedGrades:null,
-        this.selectedLanguages.length?this.selectedLanguages:null,
-        this.selectedSpec.length?this.selectedSpec:null);
-
-    array.forEach((value) => {
-      if (value) {
-        this.searchInput += " " + value;
-      }
-    })
-
-    let input = document.getElementById("searchInput");
-
-    input.value = this.searchInput;
-
-    if (this.selectedGrades.length && this.selectedLanguages.length && this.selectedSpec.length) {
+    showOk: () => {
       let ok = document.getElementsByClassName("ok-rank")[0];
       ok.classList.remove('d-none');
-      this.sendQueryToGenmatSite()
+    },
+    setSearchInputBySelected: function (){
+      let array = [];
+      this.searchInput = ""
+      array.push(this.selectedGrades.length ? this.selectedGrades : null,
+          this.selectedLanguages.length ? this.selectedLanguages : null,
+          this.selectedSpec.length ? this.selectedSpec : null);
+      array.forEach((value) => {this.searchInput += value ? " " + value : ""});
+    },
+    sendQueryToHhSite: function() {
+      let text = document.getElementById("searchInput").value.trim();
+      this.fetchVacancies(text)
+    },
+  },
+  updated: function () {
+    this.setSearchInputBySelected();
+    document.getElementById("searchInput").value = this.searchInput;
+    if (this.isAllSet()) {
+      this.showOk()
     }
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -1,5 +1,4 @@
 import {HhHandler} from "@/classes/Handlers/implementations/HhHandler";
-import {GenmatHandler} from "@/classes/Handlers/implementations/GenmatHandler";
 
 export class HandlerFactory {
     make(type) {
@@ -7,9 +6,6 @@ export class HandlerFactory {
         switch (type){
             case "hh":
                 handler = new HhHandler();
-                break;
-            case "genmat":
-                handler = new GenmatHandler();
                 break;
         }
 
