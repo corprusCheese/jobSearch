@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <Header></Header>
+    <Vacancies></Vacancies>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header"
+import Vacancies from "./components/Vacancies"
 
 export default {
   name: 'App',
   components: {
-    Header
+    Header, Vacancies
   }
 }
 </script>

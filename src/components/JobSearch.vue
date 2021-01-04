@@ -29,7 +29,7 @@
           </select>
         </div>
       </div>
-      <div class="ok-rank d-none">
+      <div class="ok-rank d-none" style="border: 1px solid green">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
              x="0px" y="0px"
              width="70.3px"
@@ -38,10 +38,9 @@
              style="enable-background:new 0 0 70.3 70.301;" xml:space="preserve">
         <g>
           <path class="st0"
-                d="m 24.415077,45.934734 c 10.069026,20.389914 10.069026,17.389914 14.069026,16.389914 6.037651,-38.63337 11.037651,-38.63337 11.037651,-40.63337"/>
+                d="m 22.415077,40.934734 c 10.069026,20.389914 10.069026,17.389914 14.069026,16.389914 6.037651,-38.63337 11.037651,-38.63337 11.037651,-40.63337"/>
         </g>
         </svg>
-        <p>Поздравляю, ты <b>петух</b>.</p>
       </div>
     </div>
   </div>
@@ -103,6 +102,10 @@ export default {
       let ok = document.getElementsByClassName("ok-rank")[0];
       ok.classList.remove('d-none');
     },
+    removeChooseView: () => {
+      let block = document.getElementById("preset");
+      block.classList.add('d-none');
+    },
     setSearchInputBySelected: function (){
       let array = [];
       this.searchInput = ""
@@ -114,6 +117,12 @@ export default {
     sendQueryToHhSite: function() {
       let text = document.getElementById("searchInput").value.trim();
       this.fetchVacancies(text)
+      .then(() => {
+        console.log(this.allVacancies())
+        if (this.allVacancies() !== []) {
+          this.removeChooseView();
+        }
+      })
     },
   },
   updated: function () {
