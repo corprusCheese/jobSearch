@@ -4,7 +4,7 @@
   "private": true,
   "author": "corprusCheese",
   "scripts": {
-    "serve": "webpack serve --mode development --watch --config webpack.config.js --progress",
+    "serve": "webpack serve --mode development",
     "build": "webpack --mode development"
   },
   "dependencies": {

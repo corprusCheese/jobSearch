@@ -6,9 +6,11 @@
              aria-label="Search" v-on:click="showSearchPreset">
       <button id="searchButton" type="button" class="btn btn-dark d-none" style="height: 35px"
       v-on:click="sendQueryToHhSite">Найти</button>
+      <button id ="showButton" class="btn btn-dark d-none ml-1" style="height: 35px" type="text"
+             aria-label="Search" v-on:click="showHideSetting">Настройки</button>
     </form>
     <div class="search-preset" id="preset">
-      <p style="text-align: center; margin: 20px; color: gray; font-size: 18px">Опиши себя по лычкам и я дам тебе новую..</p>
+      <p style="text-align: center; margin: 20px; color: gray; font-size: 18px">Опиши себя..</p>
       <div class="row">
         <div class="search-option col-4">
           <label for="grade">Грейд</label>
@@ -93,10 +95,22 @@ export default {
       let block = document.getElementById("preset");
       let input = document.getElementById("searchInput");
       let searchButton = document.getElementById("searchButton");
+      let showButton = document.getElementById("showButton");
       //actions
       block.classList.add('search-preset-show');
+      block.classList.remove('d-none');
       input.placeholder = "Ответь на вопросы ниже или напиши поисковую строку сам";
       searchButton.classList.remove('d-none');
+      showButton.classList.remove('d-none');
+    },
+    showHideSetting: () => {
+      let block = document.getElementById("preset");
+      if (block.classList.contains('d-none')) {
+        block.classList.add('search-preset-show');
+        block.classList.remove('d-none')
+      } else {
+        block.classList.add('d-none')
+      }
     },
     showOk: () => {
       let ok = document.getElementsByClassName("ok-rank")[0];

@@ -16,7 +16,7 @@ let config = {
         compress: true,
         historyApiFallback: true,
         hot: true,
-        index: 'public/index.html'
+        index: 'src/index.html'
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.vue'],
@@ -50,11 +50,10 @@ let config = {
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
-            template: __dirname + "/src/index.html"
+            template: __dirname + "/src/index.html",
+            title: "jobSearch"
         }),
-        new MiniCssExtractPlugin({
-            filename: '/src/css/style.css'
-        })
+        new MiniCssExtractPlugin()
     ],
 
 }

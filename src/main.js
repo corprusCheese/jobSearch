@@ -12,7 +12,8 @@ Vue.config.productionTip = false
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import './css/style.css'
+//import './css/style.css'
+require('./css/style.css');
 
 const axios = require('axios').default;
 const router = new VueRouter({routes});
