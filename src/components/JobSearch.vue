@@ -130,7 +130,7 @@ export default {
     },
     sendQueryToHhSite: function() {
       let text = document.getElementById("searchInput").value.trim();
-      this.fetchVacancies(text)
+      this.fetchVacancies({text:text, page:0})
       .then(() => {
         console.log(this.allVacancies())
         if (this.allVacancies() !== []) {
