@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="background: #091d3e;">
+    <div style="background: black;">
     <nav class="custom-nav">
       <router-link to='/info'>О проекте</router-link>
       <br>

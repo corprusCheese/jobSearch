@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Header></Header>
-    <Vacancies></Vacancies>
   </div>
 </template>
 
@@ -12,7 +11,7 @@ import Vacancies from "./components/Vacancies"
 export default {
   name: 'App',
   components: {
-    Header, Vacancies
+    Header
   }
 }
 </script>

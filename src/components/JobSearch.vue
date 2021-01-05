@@ -4,10 +4,12 @@
       <b-icon-search></b-icon-search>
       <input id ="searchInput" class="form-control form-control-sm m-3 w-50 h-35" style="height: 35px" type="text" placeholder="Нажми"
              aria-label="Search" v-on:click="showSearchPreset">
+      <div style="width: max-content">
       <button id="searchButton" type="button" class="btn btn-dark d-none" style="height: 35px"
       v-on:click="sendQueryToHhSite">Найти</button>
-      <button id ="showButton" class="btn btn-dark d-none ml-1" style="height: 35px" type="text"
+      <button id ="showButton" class="btn btn-dark d-none" style="height: 35px" type="text"
              aria-label="Search" v-on:click="showHideSetting">Настройки</button>
+      </div>
     </form>
     <div class="search-preset" id="preset">
       <p style="text-align: center; margin: 20px; color: gray; font-size: 18px">Опиши себя..</p>
@@ -45,15 +47,20 @@
         </svg>
       </div>
     </div>
+    <Vacancies></Vacancies>
   </div>
 </template>
 
 <script>
 import {HandlerFactory} from "@/classes/Handlers/factory/HandlerFactory";
 import {mapGetters, mapActions} from "vuex"
+import Vacancies from "./Vacancies"
 
 export default {
   name: 'JobSearch',
+  components: {
+    Vacancies
+  },
   data: () => {
     return {
       selectedGrades: [],
@@ -61,6 +68,7 @@ export default {
       selectedSpec: [],
       searchInput: "",
       handlerFactory: HandlerFactory,
+      isOkShowed: false,
       grades: [
         {id: 0, name: "junior"},
         {id: 1, name: "middle"},
@@ -77,8 +85,7 @@ export default {
       specs: [
         {id: 0, name: "Fullstack"},
         {id: 1, name: "Backend"},
-        {id: 2, name: "Frontend"},
-        {id: 3, name: "Тупой лох-вкатыш с курсов"},
+        {id: 2, name: "Frontend"}
       ]
     }
   },
@@ -90,7 +97,7 @@ export default {
           && this.selectedLanguages.length
           && this.selectedSpec.length
     },
-    showSearchPreset: () => {
+    showSearchPreset: function() {
       //elements
       let block = document.getElementById("preset");
       let input = document.getElementById("searchInput");
@@ -102,21 +109,31 @@ export default {
       input.placeholder = "Ответь на вопросы ниже или напиши поисковую строку сам";
       searchButton.classList.remove('d-none');
       showButton.classList.remove('d-none');
+      //
+      if (this.isOkShowed === true) {
+        this.hideOk()
+      }
     },
-    showHideSetting: () => {
+    showHideSetting: function() {
       let block = document.getElementById("preset");
       if (block.classList.contains('d-none')) {
         block.classList.add('search-preset-show');
         block.classList.remove('d-none')
       } else {
         block.classList.add('d-none')
+        this.hideOk()
       }
     },
-    showOk: () => {
+    showOk: function() {
       let ok = document.getElementsByClassName("ok-rank")[0];
       ok.classList.remove('d-none');
+      this.isOkShowed = true;
     },
-    removeChooseView: () => {
+    hideOk: function() {
+      let ok = document.getElementsByClassName("ok-rank")[0];
+      ok.classList.add('d-none');
+    },
+    removeChooseView: function() {
       let block = document.getElementById("preset");
       block.classList.add('d-none');
     },
@@ -135,6 +152,7 @@ export default {
         console.log(this.allVacancies())
         if (this.allVacancies() !== []) {
           this.removeChooseView();
+          this.hideOk();
         }
       })
     },
@@ -142,7 +160,7 @@ export default {
   updated: function () {
     this.setSearchInputBySelected();
     document.getElementById("searchInput").value = this.searchInput;
-    if (this.isAllSet()) {
+    if (this.isAllSet() && this.isOkShowed === false) {
       this.showOk()
     }
   }
