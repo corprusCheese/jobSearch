@@ -53,7 +53,7 @@
 
 <script>
 import {HandlerFactory} from "@/classes/Handlers/factory/HandlerFactory";
-import {mapGetters, mapActions} from "vuex"
+import {mapGetters, mapActions, mapMutations} from "vuex"
 import Vacancies from "./Vacancies"
 
 export default {
@@ -63,12 +63,7 @@ export default {
   },
   data: () => {
     return {
-      selectedGrades: [],
-      selectedLanguages: [],
-      selectedSpec: [],
-      searchInput: "",
       handlerFactory: HandlerFactory,
-      isOkShowed: false,
       grades: [
         {id: 0, name: "junior"},
         {id: 1, name: "middle"},
@@ -90,12 +85,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchVacancies']),
-    ...mapGetters(['allVacancies']),
-    isAllSet: function() {
-      return this.selectedGrades.length
-          && this.selectedLanguages.length
-          && this.selectedSpec.length
+    ...mapActions(['fetchVacancies', 'refresh']),
+    ...mapGetters(['allVacancies', "isAllSet", "getIsOkShowed",
+      "getSelectedSpec","getSelectedLanguages", "getSelectedGrades", "getSearchInput"]),
+    ...mapMutations(['setIsOkShowed']),
+    getStore: function () {
+      return this.$store.state
     },
     showSearchPreset: function() {
       //elements
@@ -110,7 +105,8 @@ export default {
       searchButton.classList.remove('d-none');
       showButton.classList.remove('d-none');
       //
-      if (this.isOkShowed === true) {
+      input.value = this.getSearchInput()
+      if (this.getIsOkShowed()) {
         this.hideOk()
       }
     },
@@ -127,7 +123,7 @@ export default {
     showOk: function() {
       let ok = document.getElementsByClassName("ok-rank")[0];
       ok.classList.remove('d-none');
-      this.isOkShowed = true;
+      this.setIsOkShowed(true);
     },
     hideOk: function() {
       let ok = document.getElementsByClassName("ok-rank")[0];
@@ -136,14 +132,6 @@ export default {
     removeChooseView: function() {
       let block = document.getElementById("preset");
       block.classList.add('d-none');
-    },
-    setSearchInputBySelected: function (){
-      let array = [];
-      this.searchInput = ""
-      array.push(this.selectedGrades.length ? this.selectedGrades : null,
-          this.selectedLanguages.length ? this.selectedLanguages : null,
-          this.selectedSpec.length ? this.selectedSpec : null);
-      array.forEach((value) => {this.searchInput += value ? " " + value : ""});
     },
     sendQueryToHhSite: function() {
       let text = document.getElementById("searchInput").value.trim();
@@ -158,11 +146,44 @@ export default {
     },
   },
   updated: function () {
-    this.setSearchInputBySelected();
-    document.getElementById("searchInput").value = this.searchInput;
-    if (this.isAllSet() && this.isOkShowed === false) {
+    document.getElementById("searchInput").value = this.getSearchInput();
+    if (this.isAllSet() && this.getIsOkShowed() === false) {
       this.showOk()
     }
+  },
+  computed: {
+    selectedGrades: {
+      get() {
+        return this.$store.state.jobSearch.selectedGrades
+      },
+      set(value) {
+        this.$store.dispatch('refresh',{grades:value})
+      }
+    },
+    selectedLanguages: {
+      get() {
+        return this.$store.state.jobSearch.selectedLanguages
+      },
+      set(value) {
+        this.$store.dispatch('refresh',{languages:value})
+      }
+    },
+    selectedSpec: {
+      get() {
+        return this.$store.state.jobSearch.selectedSpec
+      },
+      set(value) {
+        this.$store.dispatch('refresh',{spec:value})
+      }
+    },
+    searchInput: {
+      get() {
+        return this.$store.state.jobSearch.searchInput
+      },
+      set(value) {
+        this.$store.commit('setSearchInput', value)
+      }
+    },
   }
 }
 </script>

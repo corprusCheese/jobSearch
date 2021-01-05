@@ -8,6 +8,6 @@ export class HhHandler extends Handler {
 
     sendSearchRequest({url, text, page}) {
         super.sendSearchRequest();
-        return this.axios.get(this.url + url + "?text=" + encodeURIComponent(text) + "&per_page=5&page="+page)
+        return this.axios.get(this.url + url + "?text=" + encodeURIComponent(text) + "&per_page=6&page="+page)
     }
 }

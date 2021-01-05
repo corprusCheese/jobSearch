@@ -1,3 +1,15 @@
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /*text-align: center;*/
+    color: #2c3e50;
+}
+
+.header {
+    background: #343a40;
+}
+
 .custom-nav {
     margin-bottom: 50px;
     padding: 20px;
@@ -65,4 +77,12 @@
     width: fit-content;
     padding: 10px;
     margin: 40px auto 40px auto;
+}
+
+.vacancy-item {
+    width: 500px;
+    margin: 3px;
+    background: linear-gradient(to bottom, lightpink, white);
+    display: inline-table;
+    border-top: 2px solid black; border-top-left-radius: 30px; border-top-right-radius: 10px;
 }

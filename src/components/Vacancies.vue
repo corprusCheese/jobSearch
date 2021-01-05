@@ -1,9 +1,8 @@
 <template>
   <div class="container mt-5">
-    <div id="vacancies">
+    <div id="vacancies" class="vacancies">
       <div v-for="item in this.allVacancies().items" :key="item.id"
-           class="mt-3 mb-3 p-3"
-           style="border: 1px solid black; border-radius: 5px">
+           class="mt-3 mb-3 p-3 vacancy-item">
         <h3>{{ item.name }}</h3>
         <h5>{{ item.area.name}} </h5>
         <h4><a v-bind:href=item.employer.alternate_url> {{ item.employer.name}}</a> </h4>
